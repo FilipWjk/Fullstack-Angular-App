@@ -1,5 +1,6 @@
-<h1 class="main-page-title">{{ title() }}</h1>
-<p>Message from server: {{ message() }}</p>
-<router-outlet />
-
-<router-outlet />
+<app-navbar></app-navbar>
+<div class="app-content">
+  <app-card> </app-card>
+  <p>Message from server: {{ message() }}</p>
+  <router-outlet></router-outlet>
+</div>
