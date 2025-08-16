@@ -8,6 +8,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { routes } from './app.routes';
 import {
@@ -27,5 +28,6 @@ export const appConfig: ApplicationConfig = {
     provideStore({ cards: cardReducer }),
     provideEffects([CardEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: false }),
+    provideAnimationsAsync(),
   ],
 };

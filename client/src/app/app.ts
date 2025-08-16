@@ -1,17 +1,12 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Navbar } from './features/navbar/navbar';
-import { ApiService } from './services/api.service';
+import { Navbar } from './features/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, Navbar],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
+  styleUrls: ['./app.scss'],
 })
-export class App {
-  private apiService = inject(ApiService);
-
-  constructor() {}
-}
+export class App {}
