@@ -32,9 +32,9 @@ export class CardDto {
   @Expose()
   author!: string;
   @Expose()
-  createdAt!: Date;
+  createdAt!: string;
   @Expose()
-  updatedAt!: Date;
+  updatedAt!: string;
 }
 
 // * Input DTO: data required to create a new card.
@@ -74,7 +74,16 @@ export class UpdateCardDto extends PartialType(CreateCardDto) {}
 // ? Helper: convert a Card entity instance into a `CardDto`.
 // ? Keep transformations centralized to keep responses consistent.
 export const toCardDto = (card: Card): CardDto => {
-  return Object.assign(new CardDto(), card);
+  return {
+    id: card.id,
+    title: card.title,
+    image: card.image,
+    rating: card.rating,
+    description: card.description,
+    author: card.author,
+    createdAt: card.createdAt.toISOString(),
+    updatedAt: card.updatedAt.toISOString(),
+  };
 };
 
 // ? Map an array of Card entities to DTOs

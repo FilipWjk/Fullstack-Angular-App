@@ -21,12 +21,6 @@ export class CardsController {
     return toCardDtoArray(cards);
   }
 
-  @Get(':id')
-  async getCard(@Param('id') id: string) {
-    const card = await this.cardsService.findOne(Number(id));
-    return toCardDto(card);
-  }
-
   @Post()
   async createCard(@Body() body: CreateCardDto) {
     const created = await this.cardsService.create(body);
