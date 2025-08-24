@@ -1,1 +1,118 @@
-<h2>Home Page</h2>
+<div class="home-container">
+  <div class="welcome-banner">
+    <h1>
+      <mat-icon class="inline-icon">rocket_launch</mat-icon> Welcome to
+      CardManager
+    </h1>
+    <p class="banner-subtitle">
+      Organize, manage, and showcase your card collection with style
+    </p>
+
+    <div class="action-buttons">
+      <button routerLink="/cards" class="primary-action-btn">
+        <mat-icon class="inline-icon icon-margin-right">library_books</mat-icon>
+        View All Cards
+      </button>
+      <button (click)="createFirstCard()" class="secondary-action-btn">
+        <mat-icon class="inline-icon icon-margin-right">add</mat-icon>
+        Create First Card
+      </button>
+    </div>
+  </div>
+
+  <div class="features-section">
+    <h2><mat-icon class="inline-icon">auto_awesome</mat-icon> Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><mat-icon>palette</mat-icon></div>
+        <h3>Beautiful Design</h3>
+        <p>Modern, responsive card layouts with smooth animations</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><mat-icon>flash_on</mat-icon></div>
+        <h3>Full CRUD Operations</h3>
+        <p>Create, read, update, and delete cards seamlessly</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><mat-icon>search</mat-icon></div>
+        <h3>Smart Filtering</h3>
+        <p>Search and filter cards by title, author, or rating</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><mat-icon>analytics</mat-icon></div>
+        <h3>Statistics</h3>
+        <p>Track your collection with real-time stats</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-section">
+    <h2>
+      <mat-icon class="inline-icon">gps_fixed</mat-icon> Recent Cards ({{
+        recentCards.length
+      }})
+    </h2>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading$ | async" class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading recent cards...</p>
+    </div>
+
+    <!-- Error State -->
+    <div
+      *ngIf="(error$ | async) && !(isLoading$ | async)"
+      class="error-container"
+    >
+      <p class="error-message">{{ error$ | async }}</p>
+      <button class="retry-btn" (click)="loadRecentCards()">
+        <mat-icon class="inline-icon">refresh</mat-icon> Retry
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div *ngIf="!(isLoading$ | async) && !(error$ | async)">
+      <div *ngIf="recentCards.length > 0; else noCards">
+        <div class="preview-grid">
+          <div class="preview-card" *ngFor="let card of recentCards">
+            <img
+              [src]="card.image"
+              [alt]="card.title"
+              (error)="
+                $event.target.src = '/assets/images/placeholder-image.svg'
+              "
+            />
+            <div class="preview-content">
+              <h4>{{ card.title }}</h4>
+              <div class="preview-rating">
+                <span class="stars">{{ getRatingStars(card.rating) }}</span>
+                <span class="rating-value">({{ card.rating }})</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noCards>
+        <div class="no-cards-message">
+          <div class="empty-icon"><mat-icon>description</mat-icon></div>
+          <h3>No cards yet!</h3>
+          <p>Start building your collection by creating your first card.</p>
+          <button (click)="createFirstCard()" class="create-first-btn">
+            <mat-icon class="inline-icon">add</mat-icon> Create Your First Card
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<!-- Card Creation Modal -->
+<app-card-create-modal
+  *ngIf="showCreateModal"
+  (cardCreated)="onCardCreated($event)"
+  (modalClosed)="onModalClosed()"
+></app-card-create-modal>
