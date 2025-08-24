@@ -1,0 +1,274 @@
+@use "sass:color";
+@use "@shared/variables.scss" as *;
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: color.change($gray-darkest, $alpha: 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
+  padding: $spacing-4;
+}
+
+.modal-container {
+  background: $surface-color;
+  border-radius: $rounded-2xl;
+  box-shadow: $shadow-2xl;
+  max-width: 440px;
+  width: 100%;
+  animation: slideIn 0.3s ease-out;
+  overflow: hidden;
+  border: 1px solid $border-light;
+  z-index: 10000;
+  position: relative;
+}
+
+.modal-header {
+  padding: $spacing-6 $spacing-6 0 $spacing-6;
+}
+
+.modal-title-container {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+}
+
+.modal-icon {
+  font-size: $font-size-2xl;
+  padding: $spacing-3;
+  border-radius: 50%;
+  background-color: $gray-lighter;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  height: 56px;
+  border: 2px solid $border-light;
+
+  &.destructive {
+    background: color.change($error-color, $alpha: 0.1);
+    color: $error-color;
+    border-color: color.change($error-color, $alpha: 0.2);
+  }
+
+  &.warning {
+    background: color.change($warning-color, $alpha: 0.1);
+    color: $warning-color;
+    border-color: color.change($warning-color, $alpha: 0.2);
+  }
+
+  &.info {
+    background: color.change($primary-color, $alpha: 0.1);
+    color: $primary-color;
+    border-color: color.change($primary-color, $alpha: 0.2);
+  }
+
+  &.success {
+    background: color.change($success-color, $alpha: 0.1);
+    color: $success-color;
+    border-color: color.change($success-color, $alpha: 0.2);
+  }
+}
+
+.modal-title {
+  margin: 0;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  line-height: $leading-tight;
+}
+
+.modal-body {
+  padding: $spacing-4 $spacing-6 $spacing-6 $spacing-6;
+}
+
+.modal-message {
+  margin: 0;
+  color: $text-secondary;
+  line-height: $leading-relaxed;
+  font-size: $font-size-base;
+}
+
+.modal-footer {
+  padding: $spacing-6;
+  background-color: $gray-lightest;
+  display: flex;
+  gap: $spacing-3;
+  justify-content: flex-end;
+  border-top: 1px solid $border-light;
+}
+
+.btn {
+  padding: $spacing-3 $spacing-6;
+  border-radius: $rounded-lg;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition: $transition-base;
+  font-family: $font-family-primary;
+  min-width: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.btn-secondary {
+  background-color: $surface-color;
+  color: $text-primary;
+  border: 2px solid $border-color;
+
+  &:hover:not(:disabled) {
+    background-color: $gray-lightest;
+    border-color: $gray-light;
+    box-shadow: $shadow-sm;
+  }
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px color.change($primary-color, $alpha: 0.1);
+  }
+}
+
+.btn-primary {
+  background: $gradient-primary;
+  color: $white;
+  box-shadow: $shadow-primary;
+
+  &:hover:not(:disabled) {
+    box-shadow: $shadow-lg, $shadow-primary;
+  }
+
+  &:focus {
+    box-shadow: $shadow-primary,
+      0 0 0 4px color.change($primary-color, $alpha: 0.2);
+  }
+}
+
+.btn-danger {
+  background: linear-gradient(
+    135deg,
+    color.adjust($error, $lightness: -5%) 0%,
+    $error 100%
+  );
+  color: $white;
+  box-shadow: $shadow-error;
+
+  &:hover:not(:disabled) {
+    box-shadow: $shadow-lg, $shadow-error;
+  }
+
+  &:focus {
+    box-shadow: $shadow-error, 0 0 0 4px color.change($error-color, $alpha: 0.2);
+  }
+}
+
+.btn-warning {
+  background: linear-gradient(
+    135deg,
+    color.adjust($warning, $lightness: -5%) 0%,
+    $warning 100%
+  );
+  color: $white;
+  box-shadow: $shadow-warning;
+
+  &:hover:not(:disabled) {
+    box-shadow: $shadow-lg, $shadow-warning;
+  }
+
+  &:focus {
+    box-shadow: $shadow-warning,
+      0 0 0 4px color.change($warning-color, $alpha: 0.2);
+  }
+}
+
+// ==========================================
+// ANIMATIONS
+// ==========================================
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+// ==========================================
+// RESPONSIVE DESIGN
+// ==========================================
+
+@media (max-width: 480px) {
+  .modal-container {
+    margin: $spacing-3;
+    max-width: calc(100vw - #{$spacing-6});
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: $spacing-4;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    gap: $spacing-3;
+
+    .btn {
+      width: 100%;
+      min-width: auto;
+    }
+  }
+
+  .modal-title-container {
+    gap: $spacing-3;
+  }
+
+  .modal-icon {
+    min-width: 48px;
+    height: 48px;
+    font-size: $font-size-xl;
+  }
+
+  .modal-title {
+    font-size: $font-size-lg;
+  }
+}

@@ -1,0 +1,40 @@
+<div
+  *ngIf="isVisible"
+  class="modal-overlay"
+  role="dialog"
+  aria-modal="true"
+  (click)="onBackdropClick($event)"
+>
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title-container">
+        <span
+          *ngIf="icon"
+          class="modal-icon"
+          [class.destructive]="isDestructive"
+          >{{ icon }}</span
+        >
+        <h3 class="modal-title">{{ title }}</h3>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <p class="modal-message">{{ message }}</p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">
+        {{ cancelText }}
+      </button>
+      <button
+        type="button"
+        class="btn"
+        [class.btn-danger]="isDestructive"
+        [class.btn-primary]="!isDestructive"
+        (click)="onConfirm()"
+      >
+        {{ confirmText }}
+      </button>
+    </div>
+  </div>
+</div>
