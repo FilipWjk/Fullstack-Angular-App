@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Card } from '@models/card';
@@ -52,26 +56,33 @@ export class CardsService {
   addCard(
     card: Omit<Card, 'id' | 'createdAt' | 'updatedAt'>
   ): Observable<Card> {
-    return this.http.post<Card>(`${this.baseUrl}/cards`, card).pipe(
-      catchError((error) => {
-        console.error('CardsService: Add card error', error);
-        return this.handleError(error);
-      })
-    );
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http
+      .post<Card>(`${this.baseUrl}/cards`, card, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('CardsService: Add card error', error);
+          return this.handleError(error);
+        })
+      );
   }
 
   updateCard(id: number, card: Partial<Omit<Card, 'id'>>): Observable<Card> {
-    return this.http.put<Card>(`${this.baseUrl}/cards/${id}`, card).pipe(
-      catchError((error) => {
-        console.error('CardsService: Update card error', error);
-        return this.handleError(error);
-      })
-    );
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http
+      .put<Card>(`${this.baseUrl}/cards/${id}`, card, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('CardsService: Update card error', error);
+          return this.handleError(error);
+        })
+      );
   }
 
   deleteCard(id: number): Observable<{ success: boolean }> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http
-      .delete<{ success: boolean }>(`${this.baseUrl}/cards/${id}`)
+      .delete<{ success: boolean }>(`${this.baseUrl}/cards/${id}`, { headers })
       .pipe(catchError((error) => this.handleError(error)));
   }
 }

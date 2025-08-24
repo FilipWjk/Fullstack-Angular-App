@@ -5,15 +5,15 @@ export const selectCardState = createFeatureSelector<CardState>('cards');
 
 export const selectAllCards = createSelector(
   selectCardState,
-  (state) => state.cards
+  (state) => state?.cards || []
 );
 
 export const selectCardsLoading = createSelector(
   selectCardState,
-  (state) => state.loading
+  (state) => state?.loading || false
 );
 
 export const selectCardsError = createSelector(
   selectCardState,
-  (state) => state.error
+  (state) => state?.error ?? null
 );
