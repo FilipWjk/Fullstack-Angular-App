@@ -1,1 +1,285 @@
-/* You can add global styles to this file, and also import other style files */
+/* ==========================================
+  Minimal Global Styles (Reset + Typography + Utilities)
+  Only shared, non-component concerns belong here.
+  ==========================================*/
+
+@use "./app/shared/variables.scss" as *;
+
+/* 3rd‑party global theme & fonts */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+/* ==========================================
+  RESET / BASE
+  ==========================================*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $leading-normal;
+  color: $text-primary;
+  background: $background-color;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+}
+a:focus {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible),
+select:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ==========================================
+  TYPOGRAPHY SCALE
+  ==========================================*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-bold;
+  line-height: $leading-tight;
+  color: $text-primary;
+  margin-bottom: $spacing-4;
+  letter-spacing: -0.02em;
+}
+h1 {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-extrabold;
+  margin-bottom: $spacing-6;
+}
+h2 {
+  font-size: $font-size-3xl;
+}
+h3 {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+}
+h4 {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+}
+h5 {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+}
+h6 {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+}
+
+p {
+  margin-bottom: $spacing-4;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+}
+
+/* ==========================================
+  LAYOUT CONTAINER
+  ==========================================*/
+.container {
+  max-width: $container-xl;
+  margin: 0 auto;
+  padding: 0 $spacing-6;
+}
+
+/* ==========================================
+  UTILITIES
+  ==========================================*/
+/* Button utilities */
+.btn-base {
+  border: none;
+  border-radius: $rounded-lg;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: $transition-base;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-family-primary;
+
+  &:focus {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  @extend .btn-base;
+  background: $primary-color;
+  color: $white;
+
+  &:hover:not(:disabled) {
+    background: $primary-dark;
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+.btn-secondary {
+  @extend .btn-base;
+  background: $surface-color;
+  color: $text-primary;
+  border: 2px solid $border-color;
+
+  &:hover:not(:disabled) {
+    background: $gray-lightest;
+    border-color: $gray-light;
+  }
+}
+
+/* Text alignment */
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+
+/* Font weights */
+.font-normal {
+  font-weight: $font-weight-normal;
+}
+.font-medium {
+  font-weight: $font-weight-medium;
+}
+.font-semibold {
+  font-weight: $font-weight-semibold;
+}
+.font-bold {
+  font-weight: $font-weight-bold;
+}
+.font-extrabold {
+  font-weight: $font-weight-extrabold;
+}
+
+/* Font sizes */
+.text-sm {
+  font-size: $font-size-sm;
+}
+.text-base {
+  font-size: $font-size-base;
+}
+.text-lg {
+  font-size: $font-size-lg;
+}
+.text-xl {
+  font-size: $font-size-xl;
+}
+.text-2xl {
+  font-size: $font-size-2xl;
+}
+.text-3xl {
+  font-size: $font-size-3xl;
+}
+
+/* Text color helpers */
+.text-primary {
+  color: $primary-color;
+}
+.text-secondary {
+  color: $text-secondary;
+}
+.text-muted {
+  color: $text-muted;
+}
+
+/* Overflow / accessibility helpers */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================
+  RESPONSIVE ADJUSTMENTS (typography + container padding)
+  ==========================================*/
+@media (max-width: 1280px) {
+  .container {
+    max-width: $container-lg;
+  }
+}
+@media (max-width: 1024px) {
+  .container {
+    max-width: $container-md;
+  }
+}
+@media (max-width: 768px) {
+  body {
+    font-size: $font-size-sm;
+  }
+  h1 {
+    font-size: $font-size-3xl;
+  }
+  h2 {
+    font-size: $font-size-2xl;
+  }
+  h3 {
+    font-size: $font-size-xl;
+  }
+  .container {
+    max-width: $container-sm;
+    padding: 0 $spacing-4;
+  }
+}
+@media (max-width: 640px) {
+  .container {
+    max-width: 100%;
+    padding: 0 $spacing-3;
+  }
+}
