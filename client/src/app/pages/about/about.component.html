@@ -1,1 +1,89 @@
-<h2>About Page</h2>
+<div class="about-container">
+  <header class="about-header">
+    <h1>About This Project</h1>
+    <p class="subtitle">
+      A comprehensive fullstack example built with Angular 20.x (frontend with
+      SSR) and NestJS (backend) demonstrating CRUD operations, advanced state
+      management, and production-ready tooling.
+    </p>
+  </header>
+
+  <div class="about-content">
+    <section class="about-section">
+      <h2><mat-icon class="inline-icon">info</mat-icon> Overview</h2>
+      <p>
+        This application is a learning-focused, production-minded sample that
+        showcases a complete CRUD workflow for "cards" with an Angular 20.x SPA
+        frontend featuring SSR and zoneless change detection, and a NestJS REST
+        API backend with comprehensive validation. It includes centralized
+        styling tokens, responsive layouts, comprehensive NgRx state management,
+        and modern development tooling.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2><mat-icon class="inline-icon">build</mat-icon> Technical Stack</h2>
+      <ul class="icon-list">
+        <li>
+          <mat-icon class="inline-icon">code</mat-icon> Angular 20.x (Standalone
+          components, SSR, Zoneless change detection)
+        </li>
+        <li>
+          <mat-icon class="inline-icon">extension</mat-icon> Angular Material
+          (icons, UI primitives)
+        </li>
+        <li>
+          <mat-icon class="inline-icon">folder_shared</mat-icon> NgRx (actions,
+          effects, reducers, selectors, state) for comprehensive state
+          management
+        </li>
+        <li>
+          <mat-icon class="inline-icon">cloud</mat-icon> NestJS + TypeORM for
+          backend API and database access
+        </li>
+        <li>
+          <mat-icon class="inline-icon">storage</mat-icon> PostgreSQL for data
+          persistence with environment-based configuration
+        </li>
+        <li>
+          <mat-icon class="inline-icon">palette</mat-icon> SCSS with centralized
+          variables for consistent theming
+        </li>
+        <li>
+          <mat-icon class="inline-icon">build_circle</mat-icon> Modern tooling:
+          ESLint, Prettier, Jest testing, proxy configuration
+        </li>
+      </ul>
+    </section>
+
+    <section class="about-section">
+      <h2><mat-icon class="inline-icon">folder</mat-icon> Repository Layout</h2>
+      <p>The repository follows a split frontend/backend structure:</p>
+      <ul class="icon-list">
+        <li>
+          <mat-icon class="inline-icon">desktop_windows</mat-icon>
+          <strong>client/</strong> — Angular app (components, pages, services,
+          styles)
+        </li>
+        <li>
+          <mat-icon class="inline-icon">settings_applications</mat-icon>
+          <strong>server/</strong> — NestJS API (controllers, services, modules,
+          entities)
+        </li>
+      </ul>
+    </section>
+
+    <section class="about-section tech-stack">
+      <h2>How to run</h2>
+      <p>Locally run the frontend and backend in separate terminals:</p>
+      <ul>
+        <li>cd client && npm install && ng serve (or npm start)</li>
+        <li>cd server && npm install && npm run start:dev</li>
+      </ul>
+      <p>
+        Backend requires a configured PostgreSQL database with environment
+        variables — check server's README or .env setup for connection details.
+      </p>
+    </section>
+  </div>
+</div>
