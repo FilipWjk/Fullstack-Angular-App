@@ -1,0 +1,194 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>
+        {{ editMode ? "" : ""
+        }}<mat-icon class="inline-icon icon-action">{{
+          editMode ? "edit" : "library_books"
+        }}</mat-icon>
+        {{ editMode ? "Edit Card" : "Create New Card" }}
+      </h2>
+      <button class="close-btn" (click)="closeModal()" type="button">
+        <mat-icon class="icon-close">close</mat-icon>
+      </button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #cardForm="ngForm" class="form-container">
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <!-- Title Field -->
+      <div class="form-group">
+        <label for="title"
+          ><mat-icon class="inline-icon icon-title">title</mat-icon> Title
+          *</label
+        >
+        <input
+          type="text"
+          id="title"
+          name="title"
+          [(ngModel)]="formData.title"
+          required
+          maxlength="100"
+          placeholder="Enter card title..."
+          class="form-input"
+          #titleInput="ngModel"
+        />
+        <div
+          *ngIf="titleInput.invalid && titleInput.touched"
+          class="field-error"
+        >
+          Title is required
+        </div>
+      </div>
+
+      <!-- Image URL Field -->
+      <div class="form-group">
+        <label for="image"
+          ><mat-icon class="inline-icon icon-image">image</mat-icon> Image URL
+          *</label
+        >
+        <input
+          type="url"
+          id="image"
+          name="image"
+          [(ngModel)]="formData.image"
+          required
+          placeholder="https://example.com/image.jpg"
+          class="form-input"
+          #imageInput="ngModel"
+        />
+        <div
+          *ngIf="imageInput.invalid && imageInput.touched"
+          class="field-error"
+        >
+          Valid image URL is required
+        </div>
+        <button
+          type="button"
+          (click)="setDefaultImage()"
+          class="default-image-btn"
+        >
+          Use Placeholder Image
+        </button>
+      </div>
+
+      <!-- Image Preview -->
+      <div *ngIf="formData.image">
+        <img
+          [src]="formData.image"
+          [alt]="formData.title || 'Card preview'"
+          (error)="$event.target.src = '/assets/images/placeholder-image.svg'"
+          class="image-preview"
+        />
+      </div>
+
+      <!-- Rating Field -->
+      <div class="form-group">
+        <label for="rating"
+          ><mat-icon
+            class="inline-icon icon-rating"
+            style="transform: translateY(-0.1em)"
+            >star</mat-icon
+          >
+          Rating (0-5)</label
+        >
+        <div class="rating-container">
+          <input
+            type="number"
+            id="rating"
+            name="rating"
+            [(ngModel)]="formData.rating"
+            min="0"
+            max="5"
+            step="0.1"
+            class="rating-input"
+          />
+          <span class="rating-display">{{ formData.rating }} / 5</span>
+        </div>
+      </div>
+
+      <!-- Description Field -->
+      <div class="form-group">
+        <label for="description"
+          ><mat-icon class="inline-icon icon-description">description</mat-icon>
+          Description *</label
+        >
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="formData.description"
+          required
+          maxlength="500"
+          placeholder="Describe your card..."
+          rows="4"
+          class="form-textarea"
+          #descriptionInput="ngModel"
+        ></textarea>
+        <div
+          *ngIf="descriptionInput.invalid && descriptionInput.touched"
+          class="field-error"
+        >
+          Description is required
+        </div>
+        <div class="character-count">
+          {{ formData.description.length }} / 500
+        </div>
+      </div>
+
+      <!-- Author Field -->
+      <div class="form-group">
+        <label for="author"
+          ><mat-icon class="inline-icon icon-author">person</mat-icon> Author
+          *</label
+        >
+        <input
+          type="text"
+          id="author"
+          name="author"
+          [(ngModel)]="formData.author"
+          required
+          maxlength="50"
+          placeholder="Enter author name..."
+          class="form-input"
+          #authorInput="ngModel"
+        />
+        <div
+          *ngIf="authorInput.invalid && authorInput.touched"
+          class="field-error"
+        >
+          Author is required
+        </div>
+      </div>
+    </form>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        (click)="closeModal()"
+        [disabled]="isSubmitting"
+        class="cancel-btn"
+      >
+        <mat-icon class="inline-icon">{{ "cancel" }}</mat-icon>
+        Cancel
+      </button>
+      <button
+        type="submit"
+        (click)="onSubmit()"
+        [disabled]="!isFormValid() || isSubmitting"
+        class="create-btn"
+      >
+        <span *ngIf="isSubmitting">{{
+          editMode ? "Updating..." : "Creating..."
+        }}</span>
+        <span *ngIf="!isSubmitting"
+          ><mat-icon class="inline-icon icon-action">{{
+            editMode ? "save" : "check"
+          }}</mat-icon>
+          {{ editMode ? "Update Card" : "Create Card" }}</span
+        >
+      </button>
+    </div>
+  </div>
+</div>

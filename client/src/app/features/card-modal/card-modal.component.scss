@@ -1,0 +1,259 @@
+@use "sass:color";
+@use "@shared/variables.scss" as *;
+
+.inline-icon {
+  font-size: 1em;
+  line-height: 1;
+  width: 1em;
+  height: 1em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  transform: translateY(-2px);
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: $z-modal-backdrop;
+}
+
+.modal-content {
+  background: $white;
+  border-radius: $rounded-xl;
+  width: 90%;
+  max-width: $container-sm;
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid $gray-lighter;
+  background: $white;
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $gray-darker;
+  }
+}
+
+.form-container {
+  padding: 24px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  color: $gray;
+
+  &:hover {
+    background: $hover-bg-light;
+    color: $gray-darker;
+  }
+}
+
+.character-count {
+  font-size: 12px;
+  color: $gray-light;
+  text-align: right;
+  margin-top: 4px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: $gray-700;
+  }
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid $form-border;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: $form-focus;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+}
+
+.form-textarea {
+  resize: vertical;
+}
+
+.error-message {
+  background: $form-error-bg;
+  color: $form-error-text;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.field-error {
+  color: $form-error-text;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.image-preview {
+  margin-bottom: 20px;
+  text-align: center;
+  width: 350px;
+  height: 200px;
+  border-radius: 6px;
+  border: 1px solid $form-border;
+  justify-self: center;
+  display: flex;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .rating-input {
+    width: 80px;
+    padding: 12px;
+    border: 1px solid $form-border;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: $form-focus;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  }
+
+  .rating-display {
+    font-weight: 500;
+    color: $gray-500;
+  }
+}
+
+.default-image-btn {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: $gray-100;
+  border: 1px solid $form-border;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background: $gray-200;
+  }
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 24px;
+  border-top: 1px solid $gray-lighter;
+  background: $gray-50;
+}
+
+.cancel-btn {
+  padding: 10px 20px;
+  border: 1px solid $form-border;
+  background: $white;
+  color: $gray-700;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &:hover {
+    background: $error;
+    color: $white;
+    .mat-icon {
+      color: $white;
+    }
+  }
+  .mat-icon {
+    color: $error;
+    vertical-align: sub;
+  }
+}
+
+.create-btn {
+  padding: 10px 20px;
+  border: none;
+  background: $form-focus;
+  color: $white;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &:hover {
+    background: $primary-dark;
+  }
+  .mat-icon {
+    color: $white;
+    vertical-align: sub;
+  }
+
+  &:disabled {
+    background: $disabled-bg;
+    cursor: not-allowed;
+    .mat-icon {
+      color: $warning;
+    }
+  }
+}
+
+.icon-rating {
+  color: $warning-color;
+}
+
+.icon-author {
+  color: $primary-color;
+}
+
+.icon-image {
+  color: $secondary-color;
+}
+
+.icon-title {
+  color: color.scale($text-primary, $lightness: 8%);
+}
+
+.icon-description {
+  color: $gray;
+}
+
+.icon-action {
+  color: $primary-dark;
+}
+
+.icon-close {
+  color: color.change($gray-dark, $alpha: 0.8);
+}
