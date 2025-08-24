@@ -1,0 +1,220 @@
+<div class="cards-page">
+  <div class="page-header">
+    <h1>Card Collection</h1>
+    <button class="create-card-btn" (click)="startCreate()">
+      <mat-icon class="inline-icon">add</mat-icon>Create New Card
+    </button>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-number">{{ totalCards }}</div>
+        <div class="stat-label">Total Cards</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ averageRating }}</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ filteredCards.length }}</div>
+        <div class="stat-label">Showing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="filter-group">
+      <label><mat-icon class="inline-icon">search</mat-icon> Search:</label>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        placeholder="Search by title, author, or description..."
+        class="search-input"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label
+        ><mat-icon class="inline-icon warning-icon">star</mat-icon> Min
+        Rating:</label
+      >
+      <select
+        [(ngModel)]="minRating"
+        (change)="onRatingFilterChange()"
+        class="filter-select"
+      >
+        <option [value]="0">All Ratings</option>
+        <option [value]="1">1+ Stars</option>
+        <option [value]="2">2+ Stars</option>
+        <option [value]="3">3+ Stars</option>
+        <option [value]="4">4+ Stars</option>
+        <option [value]="5">5 Stars</option>
+      </select>
+    </div>
+
+    <div class="filter-group sort-group">
+      <label
+        ><mat-icon class="inline-icon primary-icon">analytics</mat-icon> Sort
+        by:</label
+      >
+      <div class="sort-controls">
+        <select
+          [(ngModel)]="sortBy"
+          (change)="onSortChange()"
+          class="filter-select sort-select"
+        >
+          <option value="title">Title</option>
+          <option value="rating">Rating</option>
+          <option value="author">Author</option>
+        </select>
+        <button
+          class="sort-toggle"
+          (click)="toggleSortOrder()"
+          title="Toggle sort order"
+        >
+          <mat-icon>{{
+            sortOrder === "asc" ? "arrow_upward" : "arrow_downward"
+          }}</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <button class="clear-filters-btn" (click)="clearFilters()">
+      <mat-icon class="inline-icon">clear_all</mat-icon> Clear Filters
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading$ | async" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading cards...</p>
+  </div>
+
+  <!-- Error State -->
+  <div
+    *ngIf="(error$ | async) && !(isLoading$ | async)"
+    class="error-container"
+  >
+    <p class="error-message">{{ error$ | async }}</p>
+    <button class="retry-btn" (click)="loadCards()">
+      <mat-icon class="inline-icon">refresh</mat-icon> Retry
+    </button>
+  </div>
+
+  <!-- Empty State -->
+  <div
+    *ngIf="
+      !(isLoading$ | async) &&
+      !(error$ | async) &&
+      filteredCards.length === 0 &&
+      cards.length === 0
+    "
+    class="empty-container"
+  >
+    <div class="empty-icon"><mat-icon>description</mat-icon></div>
+    <h3>No cards yet</h3>
+    <p>Create your first card to get started!</p>
+  </div>
+
+  <!-- No Results State -->
+  <div
+    *ngIf="
+      !(isLoading$ | async) &&
+      !(error$ | async) &&
+      filteredCards.length === 0 &&
+      cards.length > 0
+    "
+    class="no-results-container"
+  >
+    <div class="empty-icon"><mat-icon>search</mat-icon></div>
+    <h3>No cards match your filters</h3>
+    <p>Try adjusting your search criteria.</p>
+  </div>
+
+  <!-- Cards Grid -->
+  <div
+    *ngIf="
+      !(isLoading$ | async) && !(error$ | async) && filteredCards.length > 0
+    "
+    class="cards-grid"
+    (click)="closeMenu()"
+  >
+    <div class="card-item" *ngFor="let card of filteredCards">
+      <div class="card-menu">
+        <button
+          class="menu-toggle"
+          (click)="toggleMenu(card.id, $event)"
+          [class.active]="openMenuId === card.id"
+          title="More options"
+        >
+          ⋮
+        </button>
+        <div class="menu-dropdown" [class.show]="openMenuId === card.id">
+          <button (click)="startEdit(card, $event)" class="edit-btn">
+            <mat-icon class="inline-icon">edit</mat-icon> Edit
+          </button>
+          <button (click)="deleteCard(card.id, $event)" class="delete-btn-menu">
+            <mat-icon class="inline-icon">delete</mat-icon> Delete
+          </button>
+        </div>
+      </div>
+
+      <div class="card-header">
+        <img
+          [src]="card.image"
+          [alt]="card.title"
+          class="card-image"
+          (error)="$event.target.src = '/assets/images/placeholder-image.svg'"
+        />
+      </div>
+
+      <div class="card-content">
+        <h3 class="card-title">{{ card.title }}</h3>
+
+        <div class="card-rating">
+          <span class="stars">{{ getRatingStars(card.rating) }}</span>
+          <span class="rating-value">({{ card.rating }})</span>
+        </div>
+
+        <p class="card-description">{{ card.description }}</p>
+
+        <div class="card-author">
+          <mat-icon class="author-icon inline-icon">person</mat-icon>
+          <span>{{ card.author }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Card Modal -->
+<app-card-create-modal
+  *ngIf="showCreateModal"
+  (cardCreated)="onCardCreated($event)"
+  (modalClosed)="onModalClosed()"
+></app-card-create-modal>
+
+<!-- Edit Card Modal -->
+<app-card-create-modal
+  *ngIf="showEditModal && editingCard"
+  [editMode]="true"
+  [cardData]="editingCard"
+  (cardCreated)="onCardUpdated($event)"
+  (modalClosed)="onModalClosed()"
+></app-card-create-modal>
+
+<!-- Delete Confirmation Modal -->
+<app-confirmation-modal
+  [isVisible]="showDeleteConfirmation"
+  [title]="'Delete Card'"
+  [message]="
+    'Are you sure you want to delete this card? This action cannot be undone.'
+  "
+  [confirmText]="'Delete'"
+  [cancelText]="'Cancel'"
+  [isDestructive]="true"
+  [icon]="'🗑️'"
+  (confirmed)="confirmDelete()"
+  (cancelled)="closeDeleteConfirmation()"
+></app-confirmation-modal>
