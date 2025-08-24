@@ -1,0 +1,172 @@
+@use "sass:color" as color;
+@use "@shared/variables.scss" as *;
+
+.inline-icon {
+  font-size: large;
+  line-height: 1;
+  width: 1em;
+  height: 1em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.navbar-container {
+  background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $spacing-6;
+  height: $navbar-height;
+  width: 100%;
+  position: fixed;
+  z-index: $z-fixed;
+  transition: $transition-base;
+}
+
+.navbar-title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $surface-color;
+
+  // ! Pulsating Dot next to title
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(
+      135deg,
+      $secondary-light 0%,
+      $secondary-color 100%
+    );
+    border-radius: 50%;
+    margin-left: 8px;
+    vertical-align: middle;
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 10px color.change($secondary-color, $alpha: 0.5);
+  }
+}
+
+.navbar-button-section {
+  display: flex;
+  gap: $spacing-2;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.navbar-button-section button,
+.nav-burger {
+  background: color.change($surface-color, $alpha: 0.15);
+  color: $surface-color;
+  border: 2px solid color.change($surface-color, $alpha: 0.2);
+  border-radius: $rounded-xl;
+  padding: $spacing-3 $spacing-5;
+  font-family: $font-family-primary;
+  cursor: pointer;
+  transition: $transition-base;
+  max-width: 140px;
+  min-width: 80px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-1;
+
+  &:hover {
+    color: $white;
+    border-color: color.change($surface-color, $alpha: 0.4);
+    background: color.change($surface-color, $alpha: 0.25);
+    box-shadow: 0 4px 15px color.change($gray-darkest, $alpha: 0.2);
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-button-section button {
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-sm;
+    min-width: 48px;
+    max-width: none;
+    white-space: nowrap;
+    flex: 0 1 auto;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.navbar-mobile-menu {
+  position: fixed;
+  top: calc(#{$navbar-height} + $spacing-2);
+  right: $spacing-4;
+  background: $surface-color;
+  color: $text-primary;
+  border-radius: $rounded-lg;
+  box-shadow: $shadow-lg;
+  border: 1px solid $border-light;
+  overflow: visible;
+  z-index: $z-modal;
+  min-width: 200px;
+  padding: $spacing-2;
+
+  a.nav-btn {
+    background: $background-color;
+    color: $text-primary;
+    border: 1px solid $border-color;
+    border-radius: $rounded;
+    padding: $spacing-3 $spacing-4;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    font-family: $font-family-primary;
+    cursor: pointer;
+    box-shadow: 0 2px 8px color.change($gray-darkest, $alpha: 0.06);
+    transition: $transition-base;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: $spacing-2;
+
+    mat-icon {
+      margin-right: $spacing-2;
+      color: inherit;
+    }
+
+    &:hover {
+      color: $text-primary;
+      border-color: color.change($primary-color, $alpha: 0.12);
+      background: $gray-lightest;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px color.change($gray-darkest, $alpha: 0.08);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-button-section .nav-btn {
+    display: none;
+  }
+  .navbar-button-section .nav-burger {
+    display: inline-flex;
+  }
+  .navbar-mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-1;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar-button-section .nav-burger {
+    display: none !important;
+  }
+}

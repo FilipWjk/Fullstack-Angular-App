@@ -1,0 +1,43 @@
+<div class="navbar-container">
+  <span class="navbar-title">{{ title }}</span>
+  <div class="navbar-button-section">
+    <button routerLink="/home" class="nav-btn">
+      <mat-icon class="inline-icon">home</mat-icon> Home
+    </button>
+    <button routerLink="/cards" class="nav-btn">
+      <mat-icon class="inline-icon">library_books</mat-icon> Cards
+    </button>
+    <button routerLink="/about" class="nav-btn">
+      <mat-icon class="inline-icon">info</mat-icon> About
+    </button>
+    <button routerLink="/contact" class="nav-btn">
+      <mat-icon class="inline-icon">phone</mat-icon> Contact
+    </button>
+
+    <!-- Hamburger for small screens -->
+    <button class="nav-burger" (click)="toggleMenu()" aria-label="Open menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <!-- Mobile dropdown menu -->
+  <div class="navbar-mobile-menu" *ngIf="menuOpen">
+    <a routerLink="/home" class="nav-btn" (click)="closeMenu()" role="button">
+      <mat-icon>home</mat-icon> Home
+    </a>
+    <a routerLink="/cards" class="nav-btn" (click)="closeMenu()" role="button">
+      <mat-icon>library_books</mat-icon> Cards
+    </a>
+    <a routerLink="/about" class="nav-btn" (click)="closeMenu()" role="button">
+      <mat-icon>info</mat-icon> About
+    </a>
+    <a
+      routerLink="/contact"
+      class="nav-btn"
+      (click)="closeMenu()"
+      role="button"
+    >
+      <mat-icon>phone</mat-icon> Contact
+    </a>
+  </div>
+</div>
