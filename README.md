@@ -6,6 +6,8 @@ A comprehensive fullstack example built with Angular 20.x (frontend with SSR) an
 
 This application is a learning-focused, production-minded sample that showcases a complete CRUD workflow for "cards" with an Angular 20.x SPA frontend featuring SSR and zoneless change detection, and a NestJS REST API backend with comprehensive validation. It includes centralized styling tokens, responsive layouts, comprehensive NgRx state management, and modern development tooling.
 
+> 🖼️ **Want a quick preview?** Check out the [Screenshots section](#-screenshots) below to see the application in action without needing to clone or install anything!
+
 ## 🛠️ Technical Stack
 
 ### Frontend
@@ -142,3 +144,52 @@ This project serves as an educational example demonstrating:
 - NgRx state management
 - Full-stack TypeScript development
 - Production-ready tooling and configuration
+
+## 🖼 Screenshots
+
+### Homepage
+
+<details>
+<summary><strong>🏠 Homepage</strong></summary>
+
+![Homepage 1](screenshots/homepage_01.png)
+_Homepage top section_
+
+![Homepage 2](screenshots/homepage_02.png)
+_Homepage features and recent cards_
+
+</details>
+
+### Cards
+
+<details>
+<summary><strong>🗂️ Cards List</strong></summary>
+
+![Cards List](screenshots/cards_01.png)
+
+![Cards Secondary](screenshots/cards_02.png)
+_List of cards with thumbnails and basic info_
+
+</details>
+
+</details>
+
+### Create Card
+
+<details>
+<summary><strong>➕ Create Card</strong></summary>
+
+![Create Card](screenshots/cards_create.png)
+_Form to create a new card_
+
+</details>
+
+### Contact
+
+<details>
+<summary><strong>✉️ Contact Page</strong></summary>
+
+![Contact Page](screenshots/contact.png)
+_Contact page_
+
+</details>
